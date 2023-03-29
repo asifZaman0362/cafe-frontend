@@ -1,7 +1,7 @@
 import { TextInput, Spinner } from "./widgets";
 function LoginBox(_props) {
   return (
-    <div className="logincard">
+    <div className="login-card">
       <form action="/api/login" method="POST" name="loginform" className="login-form">
         <h1 className="formheader">Sign In</h1>
         <TextInput
@@ -16,7 +16,7 @@ function LoginBox(_props) {
           label="password"
           placeholder="Enter password"
         ></TextInput>
-        <button type="button" className="form-button">
+        <button type="button" className="button stretched-button">
           Login
         </button>
       </form>

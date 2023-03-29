@@ -1,6 +1,6 @@
 export function TextInput(props) {
   return (
-    <div className="input-wrapper" id={props.id}>
+    <div className="input-field" id={props.id}>
       <label htmlFor={props.name}>{props.label}</label>
       <input
         type={props.inputType}
@@ -14,7 +14,7 @@ export function TextInput(props) {
 
 export function Spinner(props) {
   return (
-    <div className="input-wrapper-spinner" id={props.id}>
+    <div className="select-container" id={props.id}>
       <label htmlFor={props.name}>{props.label}</label>
       <select name={props.name}>
         {props.options.map((option) => {
