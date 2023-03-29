@@ -1,38 +1,82 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap');
+
+:root {
+  --col-bg: rgb(240, 240, 240);
+  --col-card-bg: white;
+  --col-fg: black;
+  --col-ac: rgb(38, 132, 209);
+  --padding-standard: 40px;
+  --padding-internal: 50px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.light {
+  --col-bg: rgb(238, 238, 238);
+  --col-card-bg: white;
+  --col-fg: black;
+  --col-ac: rgb(26, 106, 224);
+  --col-shadow: rgba(0, 0, 0, 0.221);
+  --col-shadow-sec: rgba(0, 0, 0, 0.127);
+  --col-shadow-ac: rgb(26, 106, 224, 0.1);
+  --col-border-button: rgb(28, 68, 129);
+  --col-border-select: rgb(39, 102, 196);
+  --col-outline-select: rgba(106, 148, 212, 0.664);
+  --col-input-bg: rgb(233, 233, 233);
+  --col-border: rgb(197, 197, 197);
+  --col-darker: #ababab;
+  --col-table-heading: rgb(91, 91, 91);
+  --col-error: rgb(220, 43, 43);
+  --col-border-error: rgba(220, 43, 43, 0.606);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.dark {
+  --col-card-bg: rgb(34, 34, 34);
+  --col-bg: rgb(26, 26, 26);
+  --col-fg: rgb(255, 255, 255);
+  --col-ac: rgb(243, 194, 59);
+  --col-shadow: rgba(0, 0, 0, 0.212);
+  --col-shadow-sec: rgba(0, 0, 0, 0.129);
+  --col-shadow-ac: rgb(243, 194, 59, 0.1);
+  --col-border-button: rgb(141, 107, 22);
+  --col-border-select: rgb(177, 135, 31);
+  --col-outline-select: rgba(221, 183, 85, 0.507);
+  --col-input-bg: rgb(46, 46, 46);
+  --col-border: rgb(73, 73, 73);
+  --col-darker: rgb(85, 85, 85);
+  --col-table-heading: rgb(161, 161, 161);
+  --col-error: rgb(222, 111, 111);
+  --col-border-error: rgba(222, 111, 111, 0.604);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-family: 'Inter', sans-serif;
 }
 
-.App-link {
-  color: #61dafb;
+#root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+header {
+  display: flex;
+  padding: 20px var(--padding-standard);
+  
+}
+
+header .title {
+  font-weight: bold;
+  font-size: large;
+}
+
+.full {
+  flex-grow: 1;
 }
