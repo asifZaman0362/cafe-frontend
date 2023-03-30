@@ -1,8 +1,14 @@
-import { TextInput, Spinner } from "./widgets";
+import { TextInput, Spinner } from "../components/widgets";
+
 function LoginBox(_props) {
   return (
     <div className="login-card">
-      <form action="/api/login" method="POST" name="loginform" className="login-form">
+      <form
+        action="/api/login"
+        method="POST"
+        name="loginform"
+        className="login-form"
+      >
         <h1 className="formheader">Sign In</h1>
         <TextInput
           inputType="text"
