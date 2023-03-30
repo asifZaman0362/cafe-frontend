@@ -118,6 +118,9 @@ header .title {
 .formheader {
   margin: 0;
   margin-bottom: 40px;
+  margin-left: 10px;
+  text-align: left;
+  color: var(--col-ac);
 }
 
 form .select-container {
@@ -159,6 +162,7 @@ form .input-field label {
   font-weight: 600;
   font-size: 20px;
   text-transform: capitalize;
+  padding-left: 10px;
 }
 
 form .input-field input {
@@ -170,19 +174,20 @@ form .input-field input {
   background-color: var(--col-bg);
   color: var(--col-fg);
   border: none;
-  border-bottom: 3px solid var(--col-ac);
+  border-bottom: 3px solid gray;
   border-radius: 5px;
   outline: none;
+  transition: 0.5s ease-in-out;
   /* transition: color 0.5s, background-color 0.5s, border-color 0.5s; */
 }
 
-/*form .input-field input:focus, form .input-field input:focus-visible {
-  border-color: var(--col-border-select);
-}*/
+form .input-field input:focus, form .input-field input:focus-visible {
+  border-color: var(--col-ac);
+}
 
-/*form .input-field input:hover {
-  border-color: var(--col-border-button);
-}*/
+form .input-field input:hover {
+  border-color: var(--col-ac);
+}
 
 form .input-field input.invalid:hover {
   border-color: var(--col-error);
@@ -201,7 +206,7 @@ form .input-field input.invalid::placeholder {
   color: var(--col-error);
 }
 
-form .button, .stretched-button {
+.button, .stretched-button {
   display: block;
   width: 100%;
   font-size: 22px;
@@ -220,7 +225,13 @@ form .button, .stretched-button {
   position: relative;
 }
 
-form .button:hover, .stretched-button:hover {
+.button:hover, .stretched-button:hover {
   filter: brightness(100%);
   box-shadow: 1px 3px 10px 2px var(--col-shadow);
+}
+
+.horizontal-input-row {
+  display: flex;
+  justify-content: stretch;
+  column-gap: 20px;
 }
