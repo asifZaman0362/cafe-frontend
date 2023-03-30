@@ -10,6 +10,7 @@ function LoginBox(_props) {
         className="login-form"
       >
         <h1 className="formheader">Sign In</h1>
+        <Spinner id="loginselector" name="access" label="Login as" options={["Manager", "Cashier"]} />
         <TextInput
           inputType="text"
           name="username"
