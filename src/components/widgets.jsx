@@ -6,6 +6,7 @@ export function TextInput(props) {
         type={props.inputType}
         name={props.name}
         placeholder={props.placeholder ? props.placeholder : "Enter text"}
+        required={props.required}
         id={props.name}
       />
     </div>

@@ -1,17 +1,32 @@
 import { TextInput, Spinner } from "../components/widgets";
+import axios, { HttpStatusCode } from "axios";
 
-function handleLogin(updateToken) {
+async function handleLogin(updateToken) {
   let username = document.loginform.username.value;
-  updateToken({
-    user: username,
+  let password = document.loginform.password.value;
+  let accessLevel = document.loginform.access.value;
+  if (!document.loginform.checkValidity()) {
+    document.loginform.reportValidity();
+  }
+  // login using API
+  let result = await axios.postForm("/api/login", {
+    username: username,
+    password: password,
+    accessLevel: accessLevel,
   });
+  if (result.status == HttpStatusCode.Ok) {
+    updateToken(result.data.token);
+    alert("Logged in!");
+  } else {
+    alert(`Error loggin in! Error code ${result.status}`);
+  }
 }
 
 export default function LoginBox(props) {
   return (
     <div className="login-card">
       <form
-        action="/api/login"
+        action="/api/auth/login"
         method="POST"
         name="loginform"
         className="login-form"
@@ -27,12 +42,14 @@ export default function LoginBox(props) {
           inputType="text"
           name="username"
           label="username"
+          required={true}
           placeholder="Enter username"
         ></TextInput>
         <TextInput
           inputType="password"
           name="password"
           label="password"
+          required={true}
           placeholder="Enter password"
         ></TextInput>
         <button

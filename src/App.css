@@ -192,7 +192,7 @@ form .input-field input.invalid:hover {
   border-color: var(--col-error);
 }
 
-form .input-field input.invalid {
+form .input-field input:invalid {
   border-color: var(--col-error);
 }
 
