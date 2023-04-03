@@ -1,87 +1,111 @@
 import logo from "./logo.svg";
 import "./App.css";
-import LoginPage from "./pages/login";
+import LoginBox from "./pages/login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AddUserPage from "./pages/adduser";
+import AddUser from "./pages/adduser";
 import AttendanceTable from "./pages/editattendance";
+import NoPage from "./pages/nopage";
+import Header from "./components/header";
+import Dashboard from "./pages/dashboard";
+import React, { useState } from "react";
 
 let entries = [
   {
     value: true,
     name: "Rose Tyler",
-    id: "companion1"
+    id: "companion1",
   },
   {
     value: false,
     name: "Micky Smith",
-    id: "companion2"
+    id: "companion2",
   },
   {
     value: true,
     name: "Jack Harkness",
-    id: "companion3"
+    id: "companion3",
   },
   {
     value: true,
     name: "Martha Jones",
-    id: "companion4"
+    id: "companion4",
   },
   {
     value: true,
     name: "Donna Noble",
-    id: "companion5"
+    id: "companion5",
   },
   {
     value: true,
     name: "Amelia Pond",
-    id: "companion6"
+    id: "companion6",
   },
   {
     value: true,
     name: "Rory Williams",
-    id: "companion7"
+    id: "companion7",
   },
   {
     value: true,
     name: "Clara Oswald",
-    id: "companion9"
+    id: "companion9",
   },
   {
     value: true,
     name: "Bill Potts",
-    id: "companion10"
+    id: "companion10",
   },
   {
     value: true,
     name: "Nardole",
-    id: "companion11"
+    id: "companion11",
   },
   {
     value: true,
     name: "Yasmin Khan",
-    id: "companion12"
+    id: "companion12",
   },
   {
     value: true,
     name: "Ryan Sinclair",
-    id: "companion13"
+    id: "companion13",
   },
   {
     value: true,
     name: "Graham O'Brien",
-    id: "companion14"
+    id: "companion14",
   },
 ];
 
+function Index(props) {
+  if (!props.token) {
+    return <LoginBox setToken={props.setToken} />;
+  } else {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Dashboard user={props.token.user} />} />
+          <Route path="/adduser" element={<AddUser />} />
+          <Route
+            path="/attendance"
+            element={
+              <AttendanceTable date="10-10-2010" entries={entries} edit />
+            }
+          />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
+}
+
 function App() {
+  let [token, setToken] = useState(null);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/adduser" element={<AddUserPage />} />
-        <Route path="/attendance" element={<AttendanceTable date="10-10-2010" entries={entries} edit />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="full">
+      <Header />
+      <Index token={token} setToken={setToken} />
+    </div>
   );
 }
 

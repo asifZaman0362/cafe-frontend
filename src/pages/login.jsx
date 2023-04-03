@@ -1,6 +1,13 @@
 import { TextInput, Spinner } from "../components/widgets";
 
-function LoginBox(_props) {
+function handleLogin(updateToken) {
+  let username = document.loginform.username.value;
+  updateToken({
+    user: username,
+  });
+}
+
+export default function LoginBox(props) {
   return (
     <div className="login-card">
       <form
@@ -10,7 +17,12 @@ function LoginBox(_props) {
         className="login-form"
       >
         <h1 className="formheader">Sign In</h1>
-        <Spinner id="loginselector" name="access" label="Login as" options={["Manager", "Cashier"]} />
+        <Spinner
+          id="loginselector"
+          name="access"
+          label="Login as"
+          options={["Manager", "Cashier"]}
+        />
         <TextInput
           inputType="text"
           name="username"
@@ -23,21 +35,14 @@ function LoginBox(_props) {
           label="password"
           placeholder="Enter password"
         ></TextInput>
-        <button type="button" className="button stretched-button">
+        <button
+          type="button"
+          className="button stretched-button"
+          onClick={() => handleLogin(props.setToken)}
+        >
           Login
         </button>
       </form>
-    </div>
-  );
-}
-
-export default function LoginPage(_props) {
-  return (
-    <div className="loginpage full">
-      <header>
-        <div className="title">Cafeteria Management App</div>
-      </header>
-      <LoginBox></LoginBox>
     </div>
   );
 }

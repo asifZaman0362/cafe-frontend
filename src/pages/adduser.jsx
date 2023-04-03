@@ -1,6 +1,6 @@
 import { TextInput, Spinner } from "../components/widgets";
 
-function AddUser(_props) {
+export default function AddUser(_props) {
   return (
     <div className="login-card">
       <form
@@ -52,17 +52,6 @@ function AddUser(_props) {
           Add user
         </button>
       </form>
-    </div>
-  );
-}
-
-export default function AddUserPage(_props) {
-  return (
-    <div className="loginpage full">
-      <header>
-        <div className="title">Cafeteria Management App</div>
-      </header>
-      <AddUser />
     </div>
   );
 }
