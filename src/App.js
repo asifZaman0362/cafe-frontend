@@ -100,7 +100,7 @@ function Index(props) {
 }
 
 function App() {
-  let [token, setToken] = useState(null);
+  let [token, setToken] = useState(localStorage.getItem("JWT"));
   return (
     <div className="full">
       <Header />

@@ -16,6 +16,7 @@ async function handleLogin(updateToken) {
   });
   if (result.status == HttpStatusCode.Ok) {
     updateToken(result.data.token);
+    localStorage.setItem("JWT", result.data.token);
     alert("Logged in!");
   } else {
     alert(`Error loggin in! Error code ${result.status}`);
