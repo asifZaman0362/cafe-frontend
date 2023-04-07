@@ -23,3 +23,15 @@ function SelectableList(props) {
     </div>
   );
 }
+
+function MenuGallery(props) {
+  return (
+    <div className="menu-gallery">
+      {props.items.map((item) => {
+        <div className="item-preview">
+          <image src={props.thumbnail}></image>
+        </div>;
+      })}
+    </div>
+  );
+}
