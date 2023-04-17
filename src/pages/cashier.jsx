@@ -1,4 +1,4 @@
-function Dashboard(props) {
+export function CashierDashboard(props) {
   return (
     <div className="dashboard cashier">
       <h1 className="dashboard-heading">Cashier Dashboard</h1>

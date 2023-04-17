@@ -8,6 +8,7 @@ import NoPage from "./pages/nopage";
 import Header from "./components/header";
 import Dashboard from "./pages/dashboard";
 import React, { useState } from "react";
+import { Orders } from "./pages/orders";
 
 let entries = [
   {
@@ -77,7 +78,37 @@ let entries = [
   },
 ];
 
+let items = [
+  {
+    id: "1",
+    name: "Chocolate Cake",
+    quantity: 2,
+    price: 3.99,
+  },
+  {
+    id: "2",
+    name: "Herbal Tea",
+    quantity: 1,
+    price: 0.99,
+  },
+  {
+    id: "5",
+    name: "Honey Croissant",
+    quantity: 2,
+    price: 4.99,
+  },
+];
+
+function OrdersTest() {
+  return (
+    <div className="dashboard">
+      <Orders order={{ customer: "Wilfred Mott", items: items, price: 102 }} />
+    </div>
+  );
+}
+
 function Index(props) {
+  return <OrdersTest />;
   if (!props.token) {
     return <LoginBox setToken={props.setToken} />;
   } else {
