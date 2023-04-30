@@ -1,7 +1,7 @@
 export function Menu(props) {
   return (
     <div className="menu">
-      <SelectableList />
+      <SelectableList items={props.items} />
       <MenuGallery onItemSelect={props.onItemSelect} />
     </div>
   );
@@ -27,12 +27,14 @@ function MenuGallery(props) {
   return (
     <div className="menu-gallery">
       {props.items.map((item) => {
-        <div
-          className="item-preview"
-          onClick={() => props.onItemSelect(item.id)}
-        >
-          <image src={props.thumbnail}></image>
-        </div>;
+        return (
+          <div
+            className="item-preview"
+            onClick={() => props.onItemSelect(item.id)}
+          >
+            <image src={item.thumbnail}></image>
+          </div>
+        );
       })}
     </div>
   );

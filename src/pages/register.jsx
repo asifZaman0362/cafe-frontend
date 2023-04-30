@@ -1,51 +1,52 @@
 import { TextInput, Spinner } from "../components/widgets";
 import axios, { HttpStatusCode } from "axios";
 
-async function handleLogin(updateToken) {
+async function handleRegistration(updateToken) {
   let username = document.loginform.username.value;
   let password = document.loginform.password.value;
-  let accessLevel = document.loginform.access.value;
+  let email = document.loginform.email.value;
   if (!document.loginform.checkValidity()) {
     document.loginform.reportValidity();
   }
   // login using API
-  let result = await axios.post("/auth/login", {
+  console.log(username, password, email);
+  let result = await axios.post("/auth/register", {
     username: username,
     password: password,
-    accessLevel: accessLevel,
+    email: email,
   });
   if (result.status == HttpStatusCode.Ok) {
-    console.debug(result.data);
     updateToken(result.data.token);
     localStorage.setItem("JWT", result.data.token);
-    alert("Logged in!");
+    alert("Registered!");
   } else {
-    alert(`Error logging in! Error code ${result.status}`);
+    alert("User exists!");
   }
 }
 
-export default function LoginBox(props) {
+export default function RegisterBox(props) {
   return (
     <div className="login-card">
       <form
-        action="/api/auth/login"
+        action="/api/auth/register"
         method="POST"
         name="loginform"
         className="login-form"
       >
-        <h1 className="formheader">Sign In</h1>
-        <Spinner
-          id="loginselector"
-          name="access"
-          label="Login as"
-          options={["Manager", "Cashier"]}
-        />
+        <h1 className="formheader">Register</h1>
         <TextInput
           inputType="text"
           name="username"
           label="username"
           required={true}
           placeholder="Enter username"
+        ></TextInput>
+        <TextInput
+          inputType="text"
+          name="email"
+          label="email"
+          required={true}
+          placeholder="Enter email"
         ></TextInput>
         <TextInput
           inputType="password"
@@ -57,7 +58,7 @@ export default function LoginBox(props) {
         <button
           type="button"
           className="button stretched-button"
-          onClick={() => handleLogin(props.setToken)}
+          onClick={() => handleRegistration(props.setToken)}
         >
           Login
         </button>

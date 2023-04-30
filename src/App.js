@@ -1,143 +1,96 @@
-import logo from "./logo.svg";
 import "./App.css";
 import LoginBox from "./pages/login";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import AddUser from "./pages/adduser";
 import AttendanceTable from "./pages/editattendance";
 import NoPage from "./pages/nopage";
 import Header from "./components/header";
 import Dashboard from "./pages/dashboard";
 import React, { useState } from "react";
-import { Orders } from "./pages/orders";
+import axios, { HttpStatusCode } from "axios";
+import RegisterBox from "./pages/register";
+import {
+  CashierDashboard,
+  Menu,
+  Dashboard as CashierHome,
+} from "./pages/cashier";
 
-let entries = [
-  {
-    value: true,
-    name: "Rose Tyler",
-    id: "companion1",
-  },
-  {
-    value: false,
-    name: "Micky Smith",
-    id: "companion2",
-  },
-  {
-    value: true,
-    name: "Jack Harkness",
-    id: "companion3",
-  },
-  {
-    value: true,
-    name: "Martha Jones",
-    id: "companion4",
-  },
-  {
-    value: true,
-    name: "Donna Noble",
-    id: "companion5",
-  },
-  {
-    value: true,
-    name: "Amelia Pond",
-    id: "companion6",
-  },
-  {
-    value: true,
-    name: "Rory Williams",
-    id: "companion7",
-  },
-  {
-    value: true,
-    name: "Clara Oswald",
-    id: "companion9",
-  },
-  {
-    value: true,
-    name: "Bill Potts",
-    id: "companion10",
-  },
-  {
-    value: true,
-    name: "Nardole",
-    id: "companion11",
-  },
-  {
-    value: true,
-    name: "Yasmin Khan",
-    id: "companion12",
-  },
-  {
-    value: true,
-    name: "Ryan Sinclair",
-    id: "companion13",
-  },
-  {
-    value: true,
-    name: "Graham O'Brien",
-    id: "companion14",
-  },
-];
-
-let items = [
-  {
-    id: "1",
-    name: "Chocolate Cake",
-    quantity: 2,
-    price: 3.99,
-  },
-  {
-    id: "2",
-    name: "Herbal Tea",
-    quantity: 1,
-    price: 0.99,
-  },
-  {
-    id: "5",
-    name: "Honey Croissant",
-    quantity: 2,
-    price: 4.99,
-  },
-];
-
-function OrdersTest() {
-  return (
-    <div className="dashboard">
-      <Orders order={{ customer: "Wilfred Mott", items: items, price: 102 }} />
-    </div>
-  );
-}
+import { CreateOrder } from "./pages/createOrder.jsx";
 
 function Index(props) {
-  return <OrdersTest />;
-  if (!props.token) {
-    return <LoginBox setToken={props.setToken} />;
-  } else {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard user={props.token.user} />} />
-          <Route path="/adduser" element={<AddUser />} />
-          <Route
-            path="/attendance"
-            element={
-              <AttendanceTable date="10-10-2010" entries={entries} edit />
-            }
-          />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-      </BrowserRouter>
-    );
-  }
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Dashboard
+              user={props.token.username}
+              items={[
+                { change: "positive", amount: 24, name: "Potatoes" },
+                { change: "negative", amount: 4, name: "Tomatoes" },
+                { change: "negative", amount: 7, name: "Chicken" },
+                { change: "positive", amount: 10, name: "Garlic" },
+              ]}
+              attendance={{ in: 24, out: 2 }}
+            />
+          }
+        />
+        <Route path="/adduser" element={<AddUser />} />
+        <Route path="/attendance" element={<AttendanceTable />} />
+        <Route path="/*" element={<NoPage />} />
+        <Route path="/cashier" element={<CashierDashboard />}>
+          <Route index element={<CashierHome />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="createOrder" element={<CreateOrder />} />
+        </Route>
+      </Routes>
+      );
+    </BrowserRouter>
+  );
 }
 
 function App() {
   let [token, setToken] = useState(localStorage.getItem("JWT"));
-  return (
-    <div className="full">
-      <Header />
-      <Index token={token} setToken={setToken} />
-    </div>
-  );
+  let auth = localStorage.getItem("JWT");
+  console.log(auth);
+  axios
+    .get("/auth/validateToken", {
+      headers: {
+        Authorization: localStorage.getItem("JWT"),
+      },
+    })
+    .then((res) => {})
+    .catch((err) => {
+      if (err.status == HttpStatusCode.Unauthorized) {
+        setToken(null);
+        localStorage.removeItem("JWT");
+      }
+      console.error(err);
+    });
+  if (token == null) {
+    return (
+      <div className="full">
+        <Header />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginBox setToken={setToken} />} />
+            <Route
+              path="/register"
+              element={<RegisterBox setToken={setToken} />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    );
+  } else {
+    return (
+      <div className="full">
+        <Header />
+        <Index token={token} setToken={setToken} />
+      </div>
+    );
+  }
 }
 
 export default App;

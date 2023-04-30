@@ -1,23 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
   --col-bg: white;
-  --col-card-bg: #E9FEFF;
+  --col-card-bg: #e9feff;
   --col-fg: black;
   --col-ac: #247994;
   --padding-standard: 40px;
   --padding-internal: 50px;
-  --col-red: #FE6C6C;
-  --col-dark-red: #B11818;
+  --col-red: #fe6c6c;
+  --col-dark-red: #b11818;
+  --col-bg-lighter: #56afcb;
 }
 
 .light {
   --col-bg: white;
-  --col-bg-sec: #2C4241;
-  --col-card-bg: #E9FEFF;
+  --col-bg-sec: #2c4241;
+  --col-card-bg: #e9feff;
   --col-fg: black;
   --col-ac: #247994;
-  --col-ac-sec: #4DACC0;
+  --col-ac-sec: #4dacc0;
   --col-shadow: rgba(0, 0, 0, 0.221);
   --col-shadow-sec: rgba(0, 0, 0, 0.127);
   --col-shadow-ac: rgb(26, 106, 224, 0.1);
@@ -51,7 +52,8 @@
   --col-border-error: rgba(222, 111, 111, 0.604);
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -97,7 +99,6 @@ header .title {
   flex-direction: column;
   background-color: var(--col-bg-sec);
 }
-
 
 .login-form {
   background-color: var(--col-card-bg);
@@ -159,7 +160,7 @@ form .input-field {
   flex-grow: 1;
 }
 
-form  label {
+form label {
   font-weight: 600;
   font-size: 20px;
   text-transform: capitalize;
@@ -170,7 +171,7 @@ form .input-field input {
   display: block;
   margin-top: 5px;
   padding: 10px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 20px;
   background-color: var(--col-bg);
   color: var(--col-fg);
@@ -182,7 +183,8 @@ form .input-field input {
   /* transition: color 0.5s, background-color 0.5s, border-color 0.5s; */
 }
 
-form .input-field input:focus, form .input-field input:focus-visible {
+form .input-field input:focus,
+form .input-field input:focus-visible {
   border-color: var(--col-ac);
 }
 
@@ -198,7 +200,8 @@ form .input-field input:invalid {
   border-color: var(--col-error);
 }
 
-form .input-field input.invalid:focus, form .input-field input.invalid:focus-visible {
+form .input-field input.invalid:focus,
+form .input-field input.invalid:focus-visible {
   border-color: var(--col-error);
   outline: 2px solid var(--col-border-error);
 }
@@ -207,10 +210,11 @@ form .input-field input.invalid::placeholder {
   color: var(--col-error);
 }
 
-.button, .stretched-button {
+.button,
+.stretched-button {
   display: inline-block;
   font-size: 22px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 500;
   padding: 20px 0;
   margin: 30px 0 0;
@@ -221,7 +225,7 @@ form .input-field input.invalid::placeholder {
   border-bottom: 5px solid var(--col-ac);
   transition: color 0.5s, box-shadow 0.5s, background-color 0.5s, filter 0.5s;
   cursor: pointer;
-  filter: brightness(90%);
+  transition: border-bottom 0.5s ease-in-out, margin 0.5s ease-in-out;
   position: relative;
 }
 
@@ -230,9 +234,10 @@ form .input-field input.invalid::placeholder {
   width: 100%;
 }
 
-.button:hover, .stretched-button:hover {
-  filter: brightness(100%);
-  box-shadow: 1px 3px 10px 2px var(--col-shadow);
+.button:hover,
+.stretched-button:hover {
+  margin-top: 35px;
+  border-bottom: 0px solid gray;
 }
 
 .horizontal-input-row {
@@ -330,6 +335,6 @@ button {
 }
 
 .positive {
-  background-color: #4CF0AB;
-  border-color: #028E4B;
+  background-color: #4cf0ab;
+  border-color: #028e4b;
 }

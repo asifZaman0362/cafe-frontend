@@ -1,0 +1,58 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.horizontal-button-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+  column-gap: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.button.large {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 300px;
+  border-radius: 15px;
+  font-size: 24px;
+  justify-content: center;
+  row-gap: 20px;
+}
+
+.grey {
+  background-color: #c4e1eb;
+  border-color: #a8c5cf;
+  color: #73a2b1;
+}
+
+.button i {
+  font-size: 80px;
+}
+
+.order-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+form {
+  width: 400px;
+  padding: 50px;
+  background-color: #d5f0f1;
+  border: 1px solid #2e7288;
+  border-bottom: 5px solid #2e7288;
+  border-radius: 15px;
+}
+
+.formheader {
+  font-weight: 900;
+}
