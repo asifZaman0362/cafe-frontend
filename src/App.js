@@ -6,8 +6,8 @@ import AttendanceTable from "./pages/editattendance";
 import NoPage from "./pages/nopage";
 import Header from "./components/header";
 import Dashboard from "./pages/dashboard";
-import React, { useState } from "react";
-import axios, { HttpStatusCode } from "axios";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import RegisterBox from "./pages/register";
 import {
   CashierDashboard,
@@ -17,7 +17,7 @@ import {
 
 import { CreateOrder } from "./pages/createOrder.jsx";
 
-function Index(props) {
+function Index() {
   return (
     <BrowserRouter>
       <Routes>
@@ -25,7 +25,6 @@ function Index(props) {
           path="/"
           element={
             <Dashboard
-              user={props.token.username}
               items={[
                 { change: "positive", amount: 24, name: "Potatoes" },
                 { change: "negative", amount: 4, name: "Tomatoes" },
@@ -51,45 +50,51 @@ function Index(props) {
 }
 
 function App() {
-  let [token, setToken] = useState(localStorage.getItem("JWT"));
-  let auth = localStorage.getItem("JWT");
-  console.log(auth);
-  axios
-    .get("/auth/validateToken", {
-      headers: {
-        Authorization: localStorage.getItem("JWT"),
-      },
-    })
-    .then((res) => {})
-    .catch((err) => {
-      if (err.status == HttpStatusCode.Unauthorized) {
-        setToken(null);
-        localStorage.removeItem("JWT");
+  let [tried, setTried] = useState(false);
+  let [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function validate() {
+      try {
+        const response = await axios.get("/auth/validateToken", {
+          headers: {
+            Authorization: localStorage.getItem("JWT"),
+          },
+        });
+        setUser(response.data);
+        setTried(true);
+      } catch (error) {
+        setTried(true);
       }
-      console.error(err);
-    });
-  if (token == null) {
-    return (
-      <div className="full">
-        <Header />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LoginBox setToken={setToken} />} />
-            <Route
-              path="/register"
-              element={<RegisterBox setToken={setToken} />}
-            />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    );
+    }
+    validate();
+  }, []);
+
+  if (!tried) {
+    return <div>Loading...</div>;
   } else {
-    return (
-      <div className="full">
-        <Header />
-        <Index token={token} setToken={setToken} />
-      </div>
-    );
+    if (user) {
+      return (
+        <div className="full">
+          <Header level={user.accessLevel} username={user.username} />
+          <Index />
+        </div>
+      );
+    } else
+      return (
+        <div className="full">
+          <Header />
+          <BrowserRouter>
+            <Routes>
+              <Route index element={<LoginBox setToken={setUser} />} />
+              <Route
+                path="/register"
+                element={<RegisterBox setToken={setUser} />}
+              />
+            </Routes>
+          </BrowserRouter>
+        </div>
+      );
   }
 }
 

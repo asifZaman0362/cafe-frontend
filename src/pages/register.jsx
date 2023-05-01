@@ -16,7 +16,7 @@ async function handleRegistration(updateToken) {
     email: email,
   });
   if (result.status == HttpStatusCode.Ok) {
-    updateToken(result.data.token);
+    updateToken(result.data);
     localStorage.setItem("JWT", result.data.token);
     alert("Registered!");
   } else {

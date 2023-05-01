@@ -1,25 +1,25 @@
-function User(props) {
-  if (!props.user) {
+import { Link } from "react-router-dom";
+
+function User({ level, username }) {
+  if (!level) {
     return <></>;
   } else
     return (
       <div className="user">
         <div className="col">
-          <div id="level">{props.user.level}</div>
-          <div id="username">{props.user.username}</div>
+          <div id="level">{level}</div>
+          <div id="username">{username}</div>
         </div>
-        <Link to="/logout">
-          <i class="fa-solid fa-door-open"></i>
-        </Link>
+        <i class="fa-solid fa-door-open"></i>
       </div>
     );
 }
 
-export default function Header(props) {
+export default function Header({ level, username }) {
   return (
     <header>
       <div className="title">Cafeteria Management App</div>
-      <User user={props.user} />
+      <User level={level} username={username} />
     </header>
   );
 }

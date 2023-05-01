@@ -110,13 +110,13 @@ p {
 
 .recent-items-list li .negative {
   background: transparent;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .recent-items-list li .positive {
   background: transparent;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
 
