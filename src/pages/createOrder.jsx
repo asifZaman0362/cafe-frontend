@@ -1,10 +1,26 @@
 import { TextInput } from "../components/widgets";
+import { get, post } from "../request";
 
-async function handleOrderCreation(token) {
-  let name = document.loginform.customer.value;
-  let phone = document.loginform.phone.value;
-  if (!document.loginform.checkValidity()) {
-    document.loginform.reportValidity();
+async function handleOrderCreation() {
+  let name = document.orderForm.customer.value;
+  let phone = document.orderForm.phone.value;
+  let date = new Date();
+  let items = [];
+  if (!document.orderForm.checkValidity()) {
+    document.orderForm.reportValidity();
+  } else {
+    post("/billing/addOrder", {
+      date: date,
+      customer_name: name,
+      phone: phone,
+      items: items,
+    })
+      .then((res) => {
+        if (res.status == 200) alert("done");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }
 
@@ -30,7 +46,7 @@ export function CreateOrder(props) {
         <button
           type="button"
           className="button stretched-button"
-          onClick={() => handleOrderCreation(props.token)}
+          onClick={() => handleOrderCreation()}
         >
           Proceed
         </button>

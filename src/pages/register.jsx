@@ -1,4 +1,4 @@
-import { TextInput, Spinner } from "../components/widgets";
+import { TextInput, DropDown } from "../components/widgets";
 import axios, { HttpStatusCode } from "axios";
 
 async function handleRegistration(updateToken) {

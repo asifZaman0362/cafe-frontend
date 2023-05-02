@@ -1,25 +1,4 @@
-import { TextInput } from "../components/widgets";
-import axios from "axios";
-const update = () => {
-  let data = {};
-  data.username = document.loginform.username.value;
-  data.password = document.loginform.password.value;
-  data.email = document.loginform.email.value;
-  data.phone = document.loginform.phone.value;
-  data.accessLevel = "Cashier";
-  axios
-    .post("/access/addUser", data, {
-      headers: { Authorization: localStorage.getItem("JWT") },
-    })
-    .then((_res) => {
-      console.log("data added!");
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
-
-export default function AddUser() {
+export default function AddItem() {
   return (
     <div className="login-card">
       <form method="POST" name="loginform" className="login-form">
@@ -27,9 +6,9 @@ export default function AddUser() {
         <div className="horizontal-input-row">
           <TextInput
             inputType="text"
-            name="firstname"
-            label="firstname"
-            placeholder="Enter firstname"
+            name="name"
+            label="Item name"
+            placeholder="Enter item name"
           ></TextInput>
           <TextInput
             inputType="text"

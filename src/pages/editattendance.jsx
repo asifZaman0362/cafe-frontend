@@ -1,4 +1,5 @@
 export default function AttendanceTable(props) {
+  if (!props.entries) return <div>No Records!</div>;
   return (
     <div className="attendance_table">
       <h2>Attendance</h2>
@@ -29,15 +30,13 @@ export default function AttendanceTable(props) {
             );
           })}
         </tbody>
-      </table> {
-        getButton(props.edit)
-      }
+      </table>{" "}
+      {getButton(props.edit)}
     </div>
   );
 }
 
 function getButton(show) {
-    if (show)
-        return <button className="button">Submit</button>
-    else return null;
+  if (show) return <button className="button">Submit</button>;
+  else return null;
 }

@@ -1,22 +1,27 @@
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function EmployeeManager() {
   let [data, setData] = useState(null);
 
-  useEffect(async () => {
-    try {
-      let res = await axios.get("/listEmployees", {
-        headers: {
-          Authorization: localStorage.getItem("JWT"),
-        },
-      });
-      if (res.status == 200) {
-        console.debug("got attendance records: ", data);
-        setData(res.data);
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        let res = await axios.get("/employee/listEmployees", {
+          headers: {
+            Authorization: localStorage.getItem("JWT"),
+          },
+        });
+        if (res.status == 200) {
+          console.debug("got attendance records: ", data);
+          setData(res.data);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    };
+    fetch();
   }, []);
 
   if (!data) {

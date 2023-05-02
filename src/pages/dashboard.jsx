@@ -2,6 +2,7 @@ import "../dashboard.css";
 
 import { Link } from "react-router-dom";
 import Graph from "../components/graph.jsx";
+import Payment from "../components/payment.jsx";
 
 let rawData = [
   [
@@ -48,7 +49,7 @@ function Sidebar(props) {
     <div className="submodule dashboard-sidebar">
       <InventoryOverview items={props.items} />
       <hr></hr>
-      <Link to="/menu" className="fill link">
+      <Link to="menu" className="fill link">
         <i class="fa-solid fa-rectangle-list"></i>
         <span>Menu</span>
       </Link>
@@ -111,17 +112,14 @@ function SalesGraph() {
 
 export default function Dashboard(props) {
   return (
-    <div className="dashboard-manager">
-      <h1 className="dashboard-heading">Manager Dashboard</h1>
-      <div className="grid">
-        <Sidebar items={props.items}></Sidebar>
-        <AttendanceOverview
-          in={props.attendance.in}
-          missing={props.attendance.out}
-        ></AttendanceOverview>
-        <SalesGraph></SalesGraph>
-        <BottomBar></BottomBar>
-      </div>
+    <div className="grid">
+      <Sidebar items={props.items}></Sidebar>
+      <AttendanceOverview
+        in={props.attendance.in}
+        missing={props.attendance.out}
+      ></AttendanceOverview>
+      <SalesGraph></SalesGraph>
+      <BottomBar></BottomBar>
     </div>
   );
 }

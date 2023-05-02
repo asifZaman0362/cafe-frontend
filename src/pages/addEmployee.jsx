@@ -1,6 +1,33 @@
 import { TextInput } from "../components/widgets";
+import axios from "axios";
+import { useState } from "react";
+
+const update = (setResult) => {
+  let data = {};
+  data.firstname = document.loginform.firstname;
+  data.lastname = document.loginform.lastname;
+  data.email = document.loginform.email.value;
+  data.phone = document.loginform.phone.value;
+  data.address = document.loginform.address.value;
+  axios
+    .post("/employee/addEmployee", data, {
+      headers: { Authorization: localStorage.getItem("JWT") },
+    })
+    .then((_res) => {
+      setResult("success");
+      console.log("data added!");
+    })
+    .catch((error) => {
+      setResult("error");
+      console.error(error);
+    });
+};
 
 export default function AddEmployee() {
+  let [result, setResult] = useState(null);
+  if (result) {
+    alert(result == "success" ? "added entry" : "failed!");
+  }
   return (
     <div className="login-card">
       <form
@@ -9,7 +36,7 @@ export default function AddEmployee() {
         name="loginform"
         className="login-form"
       >
-        <h1 className="formheader">Add Login</h1>
+        <h1 className="formheader">Add Employee</h1>
         <div className="horizontal-input-row">
           <TextInput
             inputType="text"
@@ -32,7 +59,7 @@ export default function AddEmployee() {
         ></TextInput>
         <TextInput
           inputType="text"
-          name="text"
+          name="address"
           label="address"
           placeholder="Enter address"
         ></TextInput>
@@ -42,7 +69,13 @@ export default function AddEmployee() {
           label="phone"
           placeholder="Enter phone number"
         ></TextInput>
-        <button type="button" className="button stretched-button">
+        <button
+          type="button"
+          className="button stretched-button"
+          onClick={() => {
+            update(setResult);
+          }}
+        >
           Add user
         </button>
       </form>

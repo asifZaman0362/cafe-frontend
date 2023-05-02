@@ -1,5 +1,6 @@
 import axios from "axios";
 import Graph from "../components/graph.jsx";
+import { useState, useEffect } from "react";
 
 function Sales(props) {
   let graphData = [];

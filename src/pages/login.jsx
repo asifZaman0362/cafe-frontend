@@ -1,4 +1,4 @@
-import { TextInput, Spinner } from "../components/widgets";
+import { TextInput, DropDown } from "../components/widgets";
 import axios, { HttpStatusCode } from "axios";
 
 async function handleLogin(updateToken) {
@@ -18,6 +18,7 @@ async function handleLogin(updateToken) {
     console.debug(result.data);
     updateToken(result.data);
     localStorage.setItem("JWT", result.data.token);
+    console.debug("token:", result.data);
     alert("Logged in!");
   } else {
     alert(`Error logging in! Error code ${result.status}`);
@@ -34,7 +35,7 @@ export default function LoginBox(props) {
         className="login-form"
       >
         <h1 className="formheader">Sign In</h1>
-        <Spinner
+        <DropDown
           id="loginselector"
           name="access"
           label="Login as"

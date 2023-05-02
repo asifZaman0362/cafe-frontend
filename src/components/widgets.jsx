@@ -13,7 +13,7 @@ export function TextInput(props) {
   );
 }
 
-export function Spinner(props) {
+export function DropDown(props) {
   return (
     <div className="select-container" id={props.id}>
       <label htmlFor={props.name}>{props.label}</label>

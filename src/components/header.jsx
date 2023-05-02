@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-
-function User({ level, username }) {
+function User({ level, username, setToken }) {
   if (!level) {
     return <></>;
   } else
@@ -10,16 +8,16 @@ function User({ level, username }) {
           <div id="level">{level}</div>
           <div id="username">{username}</div>
         </div>
-        <i class="fa-solid fa-door-open"></i>
+        <i class="fa-solid fa-door-open" onClick={() => setToken()}></i>
       </div>
     );
 }
 
-export default function Header({ level, username }) {
+export default function Header({ level, username, setToken }) {
   return (
     <header>
       <div className="title">Cafeteria Management App</div>
-      <User level={level} username={username} />
+      <User level={level} username={username} setToken={setToken} />
     </header>
   );
 }
