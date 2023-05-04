@@ -36,7 +36,7 @@ function InventoryOverview(props) {
             </li>
           ))}
         </ul>
-        <Link to="/inventory" className="button white">
+        <Link to="inventory" className="button white">
           Inventory
         </Link>
       </div>
@@ -72,10 +72,10 @@ function AttendanceOverview(props) {
         </div>
       </div>
       <div className="row horizontal fill transparent">
-        <Link className="button white fill" to="/newattendance">
+        <Link className="button white fill" to="listAttendance">
           Browse Records
         </Link>
-        <Link className="button white fill" to="/listattendance">
+        <Link className="button white fill" to="addAttendance">
           Take Attendance
         </Link>
       </div>
@@ -87,13 +87,13 @@ function BottomBar() {
   return (
     <div className="bottombar submodule">
       <div className="col">
-        <Link to="/access" className="fill link">
+        <Link to="access" className="fill link">
           <i class="fa-solid fa-address-card"></i>
           Manage Access
         </Link>
       </div>
       <div className="col">
-        <Link to="/billing" className="fill link">
+        <Link to="sales" className="fill link">
           <i class="fa-solid fa-coins"></i>
           Sales & Billing
         </Link>

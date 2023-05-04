@@ -505,3 +505,7 @@ tbody {
 .large-icon {
   font-size: 32px;
 }
+
+.full-height {
+  height: 100%;
+}

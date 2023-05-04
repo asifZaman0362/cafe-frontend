@@ -66,6 +66,7 @@ function Index({ manager }) {
           <Route path="listEmployees" element={<EmployeeManager />} />
           <Route path="attendance" element={<AttendanceTable />} />
           <Route path="sales" element={<Sales />} />
+          <Route path="listAttendance" element={<AttendanceTable />} />
         </Route>
         <Route path="/cashier" element={<CashierDashboard manager={manager} />}>
           <Route index element={<CashierHome />} />
