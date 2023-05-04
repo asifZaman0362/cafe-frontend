@@ -16,7 +16,10 @@ async function handleOrderCreation() {
       items: items,
     })
       .then((res) => {
-        if (res.status == 200) alert("done");
+        if (res.status == 200) {
+          const id = res.data.id;
+          window.location.replace(`../order/${id}`);
+        }
       })
       .catch((err) => {
         console.error(err);

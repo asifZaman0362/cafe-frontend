@@ -20,6 +20,10 @@ ul {
   flex-direction: column;
 }
 
+.categories ul {
+  overflow: scroll;
+}
+
 h1 {
   font-weight: 900;
   padding: 20px;
@@ -64,6 +68,8 @@ h1 {
   flex-direction: row;
   color: white;
   padding: 10px 20px;
+  z-index: 99;
+  background: var(--col-ac);
 }
 
 .item-preview .name {
@@ -75,10 +81,53 @@ h1 {
 }
 
 .item-preview .price::before {
-  content: "$";
+  content: "₹";
 }
 
 .item-preview img {
-  width: 100%;
   object-fit: cover;
+  height: 100%;
+  width: 100%;
+  transition: 0.5s ease-in-out;
+  position: relative;
+}
+
+.item-preview img:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+  filter: brightness(0.5);
+}
+
+.add-button {
+  background: lightgray;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 10px solid gray;
+  position: relative;
+  font-size: 24px;
+  color: gray;
+  font-weight: 900;
+  text-decoration: none;
+  transition: 0.5s ease-in;
+  height: 290px;
+}
+
+.add-button i {
+  font-size: 90px;
+}
+
+.add-button:hover {
+  border-bottom: 0px solid black;
+  translate: 0 10px;
+}
+
+.menu-parent {
+  flex: 1;
+}
+
+.selected {
+  background: var(--col-card-bg);
 }

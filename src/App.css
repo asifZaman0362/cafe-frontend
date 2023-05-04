@@ -101,6 +101,11 @@ header .user {
   column-gap: 10px;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
 header .user .col {
   display: flex;
   flex-direction: column;
@@ -321,6 +326,7 @@ form .input-field input.invalid::placeholder {
 
 .order img {
   aspect-ratio: 1;
+  object-fit: cover;
 }
 
 .item-label {
@@ -349,6 +355,65 @@ form .input-field input.invalid::placeholder {
   margin: 0;
 }
 
+.order .price::before {
+  content: "₹";
+}
+
+.order button {
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  transition: 0.5s;
+}
+
+.red-bg {
+  background: var(--col-red);
+  border-color: var(--col-dark-red);
+}
+.green-bg {
+  background-color: #4cf0ab;
+  border-color: #028e4b;
+}
+
+.green-fg {
+  color: #4cf0ab;
+}
+.red-fg {
+  color: var(--col-red);
+}
+
+.order button:hover {
+  translate: 0 2px;
+  border-bottom: 0px;
+}
+
+.order .button-bar {
+  column-gap: 0;
+}
+
+.bottom-bar {
+  margin: 15px;
+}
+
+.total {
+  flex: 1;
+  text-align: right;
+}
+
+.total-price {
+  font-size: 24px;
+}
+
+.total-price::before {
+  content: "₹";
+}
+
+.spinner {
+  font-size: 90px;
+  margin: 30px;
+}
+
 button {
   padding: 15px 20px;
   font-weight: bold;
@@ -358,6 +423,13 @@ button {
   border-bottom: 2px solid var(--col-ac);
   border-radius: 5px;
   margin: 5px;
+  transition: 0.5s;
+}
+
+button:hover {
+  border-bottom: 0;
+  translate: 0 2px;
+  cursor: pointer;
 }
 
 .negative {
@@ -372,41 +444,35 @@ button {
 
 table {
   background: white;
-  border: 1px solid var(--col-ac);
   border-bottom: 5px solid var(--col-ac);
   margin: 40px;
   padding: 0;
-  display: flex;
-  flex-direction: column;
   clip-path: inset(100% 100% round 15px 15px 0 0);
   border-radius: 15px;
+  border-collapse: collapse;
+  flex: 1;
 }
 
 thead {
-  display: flex;
   background: var(--col-ac);
   color: white;
 }
 
 tr {
-  display: flex;
-  flex: 1;
   padding: 10px 20px;
 }
 
 td,
 th {
   text-align: left;
-  flex: 1;
+  border: 1px solid var(--col-ac);
+  padding: 10px;
 }
-
 th {
-  flex: 1;
+  border-color: var(--col-ac-sec);
 }
 
 tbody {
-  display: inline-block;
-  display: flex;
   flex-direction: column;
 }
 

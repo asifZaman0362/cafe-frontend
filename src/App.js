@@ -19,6 +19,9 @@ import Menu from "./pages/menu.jsx";
 import Dashboard from "./pages/dashboard.jsx";
 
 import { CreateOrder } from "./pages/createOrder.jsx";
+import AddItem from "./pages/addItem";
+import { Orders } from "./pages/orders";
+import ListOrders from "./pages/listOrders";
 
 function clearToken(userHook) {
   userHook(null);
@@ -55,6 +58,7 @@ function Index({ manager }) {
             }
           />
           <Route path="menu" element={<Menu edit={true} />} />
+          <Route path="addItem" element={<AddItem />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="access" element={<ManageAccess />} />
           <Route path="addUser" element={<AddUser />} />
@@ -66,7 +70,9 @@ function Index({ manager }) {
         <Route path="/cashier" element={<CashierDashboard manager={manager} />}>
           <Route index element={<CashierHome />} />
           <Route path="createOrder" element={<CreateOrder />} />
-          <Route path="/cashier/menu" element={<Menu edit={false} />} />
+          <Route path="menu" element={<Menu edit={false} />} />
+          <Route path="order/:orderId" element={<Orders />} />
+          <Route path="viewOrders" element={<ListOrders />} />
         </Route>
         <Route path="/*" element={<NoPage />} />
       </Routes>

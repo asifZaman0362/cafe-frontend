@@ -13,3 +13,10 @@ export async function post(url, data) {
     headers: { Authorization: localStorage.getItem("JWT") },
   });
 }
+
+export async function remove(url, item) {
+  const fullUrl = `${url}/${item}`;
+  return axios.delete(fullUrl, {
+    headers: { Authorization: localStorage.getItem("JWT") },
+  });
+}

@@ -16,6 +16,12 @@ export function Dashboard(props) {
         </Link>
       </div>
       <div className="buttonContainer large">
+        <Link to="viewOrders/" className="button large">
+          <i class="fa-solid fa-box-open"></i>
+          <span>Orders</span>
+        </Link>
+      </div>
+      <div className="buttonContainer large">
         <Link to="menu/" className="button large">
           <i class="fa-solid fa-rectangle-list"></i>
           <span>Menu</span>

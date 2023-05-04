@@ -2,69 +2,47 @@ import "./menu.css";
 import "../components/modal.css";
 import { TextInput } from "../components/widgets.jsx";
 import { useEffect, useState } from "react";
-import { get, post } from "../request";
+import { get, post, remove } from "../request";
+import { Link } from "react-router-dom";
 
-let items = [
-  {
-    name: "Item",
-    price: 29,
-    thumbnail:
-      "https://image.slidesharecdn.com/foodcarving-150618055801-lva1-app6891/95/food-carving-and-there-meaning-1-638.jpg?cb=1434607373",
-  },
-  {
-    name: "Item",
-    price: 29,
-    thumbnail:
-      "https://image.slidesharecdn.com/foodcarving-150618055801-lva1-app6891/95/food-carving-and-there-meaning-1-638.jpg?cb=1434607373",
-  },
-  {
-    name: "Item",
-    price: 29,
-    thumbnail:
-      "https://image.slidesharecdn.com/foodcarving-150618055801-lva1-app6891/95/food-carving-and-there-meaning-1-638.jpg?cb=1434607373",
-  },
-  {
-    name: "Item",
-    price: 29,
-    thumbnail:
-      "https://image.slidesharecdn.com/foodcarving-150618055801-lva1-app6891/95/food-carving-and-there-meaning-1-638.jpg?cb=1434607373",
-  },
-  {
-    name: "Item",
-    price: 29,
-    thumbnail:
-      "https://image.slidesharecdn.com/foodcarving-150618055801-lva1-app6891/95/food-carving-and-there-meaning-1-638.jpg?cb=1434607373",
-  },
-  {
-    name: "Item",
-    price: 29,
-    thumbnail:
-      "https://image.slidesharecdn.com/foodcarving-150618055801-lva1-app6891/95/food-carving-and-there-meaning-1-638.jpg?cb=1434607373",
-  },
-];
+export default function Menu({ edit, onSelectItem = () => {} }) {
+  let [selectedCategory, setSelectedCategory] = useState(null);
 
-export default function Menu({ edit }) {
   return (
     <div className="menu">
-      <SelectableList heading="Categories" edit={edit} />
-      <MenuGallery items={items} onItemSelect={() => {}} />
+      <SelectableList
+        heading="Categories"
+        edit={edit}
+        category={selectedCategory}
+        onSelect={setSelectedCategory}
+      />
+      <MenuGallery
+        edit={edit}
+        onItemSelect={onSelectItem}
+        category={selectedCategory}
+      />
     </div>
   );
 }
 
-function AddCategory({ updateState }) {
+function AddCategory({ updateState, cancel }) {
   return (
     <div className="modal-container-fullscreen">
       <form action="" name="catform">
         <h1 className="form-heading">Add Category</h1>
         <TextInput inputType="text" required="true" name="category"></TextInput>
-        <button
-          className="button stretched-button"
-          type="button"
-          onClick={() => updateState()}
-        >
-          Add Category
-        </button>
+        <div className="row">
+          <button
+            className="button stretched-button"
+            type="button"
+            onClick={() => updateState()}
+          >
+            Add Category
+          </button>
+          <button className="button red" onClick={() => cancel()}>
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -73,6 +51,14 @@ function AddCategory({ updateState }) {
 function SelectableList(props) {
   let [modal, setModal] = useState(false);
   let [categories, setCategories] = useState(null);
+
+  const removeCategory = (id) => {
+    remove("/menu/removeCategory", id)
+      .then((_res) =>
+        setCategories(categories.filter((item) => item._id != id))
+      )
+      .catch((err) => console.error(err));
+  };
 
   const addCategory = async () => {
     try {
@@ -94,6 +80,8 @@ function SelectableList(props) {
         if (res.status == 200) {
           console.debug(res.data);
           setCategories(res.data);
+          if (!props.category && res.data.length > 0)
+            props.onSelect(res.data[0]._id);
         }
       } catch (error) {
         console.error(error);
@@ -112,8 +100,23 @@ function SelectableList(props) {
       <ul>
         {" "}
         {categories.map((item) => (
-          <li key={item.id} onClick={() => props.onItemSelect(item.id)}>
-            {item.name}
+          <li
+            key={item._id}
+            onClick={() => {
+              console.log("selected: ", item._id);
+              props.onSelect(item._id);
+            }}
+            className={(props.category == item._id ? "selected" : "") + " row"}
+          >
+            <span className="fill">{item.name}</span>
+            {props.edit && (
+              <button
+                className="red-bg"
+                onClick={() => removeCategory(item._id)}
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            )}
           </li>
         ))}
       </ul>
@@ -127,6 +130,7 @@ function SelectableList(props) {
           updateState={() => {
             addCategory();
           }}
+          cancel={() => setModal(false)}
         />
       )}
     </div>
@@ -134,14 +138,43 @@ function SelectableList(props) {
 }
 
 function MenuGallery(props) {
+  let [items, setItems] = useState(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        let query = props.category ? `?category=${props.category}` : "";
+        console.log(query);
+        let res = await get(`/menu/listItems${query}`);
+        if (res.status == 200) {
+          console.debug(res.data);
+          setItems(res.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetch();
+  }, [props.category]);
+
+  if (!items) {
+    return <div>Loading...</div>;
+  }
   return (
-    <div>
+    <div className="menu-parent">
       <div className="menu-gallery">
-        {props.items.map((item) => {
+        {items.map((item) => {
           return (
             <div
               className="item-preview"
-              onClick={() => props.onItemSelect(item.id)}
+              onClick={() =>
+                props.onItemSelect(
+                  item.name,
+                  item.id,
+                  item.price,
+                  item.thumbnail
+                )
+              }
             >
               <img src={item.thumbnail}></img>
               <div className="item-info">
@@ -151,6 +184,12 @@ function MenuGallery(props) {
             </div>
           );
         })}
+        {props.edit && (
+          <Link className="add-button" to="../addItem">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Item</span>
+          </Link>
+        )}
       </div>
     </div>
   );
