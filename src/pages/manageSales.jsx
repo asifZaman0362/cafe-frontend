@@ -26,13 +26,16 @@ export default function Sales() {
     const fetch = async () => {
       try {
         let res = await get("/sales/listSales");
-        let recent = res.slice(-14);
+        console.debug("sales data", res.data);
+        let x = 0;
+        let recent = res.data.slice(-14).map((data) => {
+          return { x: (x++ % 7) + 1, y: data.sales };
+        });
         if (recent.length == 14) {
           setGraphData([recent.slice(0, 7), recent.slice(7, 14)]);
         } else {
           setGraphData([recent]);
         }
-        console.debug(res.data);
         setData(res.data);
       } catch (err) {
         console.error(err);
@@ -45,30 +48,50 @@ export default function Sales() {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="row fill full-height" style={{ alignItems: "start" }}>
+      <div
+        className="row fill"
+        style={{ alignItems: "start", overflow: "scroll" }}
+      >
         <div className="canvasContainer fill full-height">
-          <Graph data={rawData} startx={100} endx={50} starty={50} endy={100} />
+          <Graph
+            data={graphData}
+            startx={100}
+            endx={50}
+            starty={50}
+            endy={100}
+          />
         </div>
-        <table style={{ margin: 0 }}>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Orders Served</th>
-              <th>Sales</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item) => {
-              return (
-                <tr>
-                  <td>{item.date}</td>
-                  <td>{item.order_count}</td>
-                  <td>{item.sales}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div
+          className="table-container"
+          style={{
+            overflow: "scroll",
+            flex: "1 1 1px",
+            height: "100%",
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <table className="full-height" style={{ margin: 0 }}>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Orders Served</th>
+                <th>Sales</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item) => {
+                return (
+                  <tr>
+                    <td>{item.date}</td>
+                    <td>{item.order_count}</td>
+                    <td>{item.sales}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

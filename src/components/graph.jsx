@@ -80,7 +80,7 @@ function drawPoint(ctx, point, normal, hover) {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "black";
-    ctx.fillText(`${x}, ${y}`, point.x, point.y - 30);
+    ctx.fillText(`${y}`, point.x, point.y - 30);
     ctx.lineWidth = 1;
   } else {
     color = normal;
@@ -247,6 +247,7 @@ function drawAxes(
   let dx = width_data / intervalsx;
   let dy = height_data / intervalsy;
   for (let x = 0; x <= intervalsx; x++) {
+    console.log(x);
     let xpos = (x * (endx - startx)) / intervalsx + startx;
     let data_point_x = dx * x + data_start_x;
     ctx.fillStyle = "black";
@@ -254,7 +255,7 @@ function drawAxes(
     ctx.textBaseline = "top";
     ctx.fillText(data_point_x.toString(), xpos, endy + 10);
   }
-  for (let y = 0; y <= intervalsy; y++) {
+  for (let y = 0; y < intervalsy; y++) {
     let ypos = (y * (endy - starty)) / intervalsy + starty;
     let data_point_y = height_data - y * dy + data_start_y;
     ctx.fillStyle = "black";
@@ -292,7 +293,7 @@ function draw(
     width - endx,
     5,
     0,
-    4,
+    6,
     "time",
     starty,
     height - endy,

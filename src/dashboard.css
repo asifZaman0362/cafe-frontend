@@ -49,8 +49,12 @@ h1.submodule-heading {
   align-items: stretch;
 }
 
-.bottombar .col:first-child {
+.bottombar .col {
   border-right: 1px solid #ffffff80;
+}
+
+.bottombar .col:last-child {
+  border-right: 0px solid transparent;
 }
 
 .submodule i {

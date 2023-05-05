@@ -260,7 +260,7 @@ form .input-field input.invalid::placeholder {
   border-bottom: 5px solid var(--col-ac);
   transition: color 0.5s, box-shadow 0.5s, background-color 0.5s, filter 0.5s;
   cursor: pointer;
-  transition: border-bottom 0.5s ease-in-out, margin 0.5s ease-in-out;
+  transition: border-bottom 0.5s ease-in-out, translate 0.5s ease-in-out;
   position: relative;
 }
 
@@ -271,8 +271,8 @@ form .input-field input.invalid::placeholder {
 
 .button:hover,
 .stretched-button:hover {
-  margin-top: 35px;
   border-bottom: 0px solid gray;
+  translate: 0 5px;
 }
 
 .horizontal-input-row {
@@ -445,12 +445,12 @@ button:hover {
 table {
   background: white;
   border-bottom: 5px solid var(--col-ac);
-  margin: 40px;
   padding: 0;
   clip-path: inset(100% 100% round 15px 15px 0 0);
   border-radius: 15px;
   border-collapse: collapse;
   flex: 1;
+  margin: 20px 0;
 }
 
 thead {
@@ -508,4 +508,60 @@ tbody {
 
 .full-height {
   height: 100%;
+}
+input[type="date"] {
+  background-color: var(--col-ac);
+  padding: 15px;
+  color: #ffffff;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+::-webkit-calendar-picker-indicator {
+  background-color: #ffffff;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.dateLabel {
+  font-weight: bold;
+}
+.attendance_table {
+  padding: 20px;
+}
+
+.smolbutton {
+  height: 20px;
+  width: 20px;
+  border: none !important;
+  padding: 0px;
+  background: none;
+  color: black;
+}
+
+.smolbutton:hover {
+  translate: 0 0;
+  color: gray;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.plus::before {
+  content: "+";
+}
+
+.minus::before {
+  content: "-";
+}
+
+.alt-green-fg {
+  color: #1fa46c;
+}
+
+.alt-red-fg {
+  color: #d22626;
 }

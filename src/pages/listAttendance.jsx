@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { get } from "../request";
 
 export default function ListAttendance() {
@@ -7,7 +8,8 @@ export default function ListAttendance() {
   useEffect(() => {
     const fetch = async () => {
       try {
-        let res = await get("/attendance/listAttendance");
+        let res = await get("/attendance/list");
+        console.debug(res.data);
         setData(res.data);
       } catch (error) {
         console.log(error);

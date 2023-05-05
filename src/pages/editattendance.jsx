@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { get } from "../request";
 
@@ -21,59 +21,87 @@ function attendanceReducer(attendance, action) {
 }
 
 export default function AttendanceTable() {
-  const { recordId } = useParams("id");
-  const [attendance, dispatch] = useReducer(attendanceReducer, []);
+  const [date, setDate] = useState(null);
+  const [attendance, dispatch] = useReducer(attendanceReducer, null);
   useEffect(() => {
     const fetch = async () => {
       try {
-        let res = await get(`/attendance/getRecord?id=${recordId}`);
+        if (!date) {
+          return;
+        }
+        let res = await get(`/attendance/getRecord/${date}`);
+        console.debug("attendance data: ", res.data);
         dispatch({ type: "init", attendance: res.data });
       } catch (error) {
         console.error(error);
       }
-      fetch();
     };
-  }, [recordId]);
+    fetch();
+  }, [date]);
+
+  if (!attendance)
+    return (
+      <div className="attendance_table">
+        <div className="col">
+          <div>
+            <label htmlFor="date" class="dateLabel">
+              Select Date:{" "}
+            </label>
+            <input
+              type="date"
+              id="datepicker"
+              name="date"
+              onChange={() => {
+                setDate(document.querySelector("#datepicker").value);
+              }}
+              defaultValue={date}
+            />
+          </div>
+        </div>
+        <div>No Records!</div>
+      </div>
+    );
 
   return (
-    <div className="attendance_table">
-      <h2>Attendance</h2>
-      <h3>Date: {attendance.date}</h3>
+    <div className="attendance_table col">
+      <div className="col">
+        <div>
+          <label htmlFor="date" class="dateLabel">
+            Select Date:{" "}
+          </label>
+          <input
+            type="date"
+            id="datepicker"
+            name="date"
+            onChange={() => {
+              setDate(document.querySelector("#datepicker").value);
+            }}
+            defaultValue={date}
+          />
+        </div>
+      </div>
       <table>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Present</th>
+            <th>Attendance</th>
           </tr>
         </thead>
         <tbody>
           {attendance.entries.map((entry) => {
             let options = {};
-            if (entry.value) {
-              options.defaultChecked = true;
-            }
+            if (entry.attendance) {
+              options.present = "Present";
+            } else options.present = "Absent";
             return (
               <tr>
                 <td>{entry.name}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    id={entry.id}
-                    {...options}
-                    onChange={() => dispatch({ type: "toggle", id: entry.id })}
-                  />
-                </td>
+                <td>{options.present}</td>
               </tr>
             );
           })}
         </tbody>
       </table>{" "}
-      {getButton(true)}
     </div>
   );
-}
-
-function getButton(show) {
-  if (show) return <button className="button">Submit</button>;
-  else return null;
 }

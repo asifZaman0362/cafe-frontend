@@ -3,11 +3,12 @@ import axios from "axios";
 import { useState } from "react";
 
 const update = (setResult) => {
+  alert("hello");
   let data = {};
-  data.firstname = document.loginform.firstname;
-  data.lastname = document.loginform.lastname;
-  data.email = document.loginform.email.value;
-  data.phone = document.loginform.phone.value;
+  data.firstname = document.loginform.firstname.value;
+  data.lastname = document.loginform.lastname.value;
+  data.emailId = document.loginform.email.value;
+  data.phoneNumber = document.loginform.phone.value;
   data.address = document.loginform.address.value;
   axios
     .post("/employee/addEmployee", data, {
@@ -25,9 +26,6 @@ const update = (setResult) => {
 
 export default function AddEmployee() {
   let [result, setResult] = useState(null);
-  if (result) {
-    alert(result == "success" ? "added entry" : "failed!");
-  }
   return (
     <div className="login-card">
       <form

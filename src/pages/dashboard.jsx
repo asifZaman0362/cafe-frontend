@@ -3,23 +3,8 @@ import "../dashboard.css";
 import { Link } from "react-router-dom";
 import Graph from "../components/graph.jsx";
 import Payment from "../components/payment.jsx";
-
-let rawData = [
-  [
-    { x: 0, y: 100 },
-    { x: 50, y: 400 },
-    { x: 100, y: 100 },
-    { x: 150, y: 540 },
-    { x: 200, y: 300 },
-  ],
-  [
-    { x: 0, y: 120 },
-    { x: 50, y: 330 },
-    { x: 100, y: 150 },
-    { x: 150, y: 420 },
-    { x: 200, y: 400 },
-  ],
-];
+import { useEffect, useState } from "react";
+import { get } from "../request";
 
 function InventoryOverview(props) {
   return (
@@ -98,14 +83,46 @@ function BottomBar() {
           Sales & Billing
         </Link>
       </div>
+      <div className="col">
+        <Link to="manageEmployees" className="fill link">
+          <i class="fa-solid fa-user-tie"></i>
+          Manage Employees
+        </Link>
+      </div>
     </div>
   );
 }
 
 function SalesGraph() {
+  const [graphData, setGraphData] = useState(null);
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        let res = await get("/sales/listSales");
+        console.debug("sales data", res.data);
+        let x = 0;
+        let recent = res.data.slice(-14).map((data) => {
+          return { x: (x++ % 7) + 1, y: data.sales };
+        });
+        if (recent.length == 14) {
+          setGraphData([recent.slice(0, 7), recent.slice(7, 14)]);
+        } else if (recent.length > 7) {
+          setGraphData([recent.slice(0, 7)]);
+        } else {
+          setGraphData(null);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetch();
+  }, []);
+  if (!graphData) {
+    return <div>Not enough data for a plot :(</div>;
+  }
   return (
     <div className="canvasContainer">
-      <Graph data={rawData} startx={100} endx={50} starty={50} endy={100} />
+      <Graph data={graphData} startx={100} endx={50} starty={50} endy={100} />
     </div>
   );
 }
