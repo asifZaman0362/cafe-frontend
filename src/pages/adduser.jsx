@@ -12,9 +12,15 @@ const update = () => {
       headers: { Authorization: localStorage.getItem("JWT") },
     })
     .then((_res) => {
+      <Modal
+        title="Success"
+        text="User added successfully"
+        linkPositive="../"
+      />;
       console.log("data added!");
     })
     .catch((error) => {
+      <Modal title="Failure" text="Failed to add user" linkPositive="." />;
       console.error(error);
     });
 };

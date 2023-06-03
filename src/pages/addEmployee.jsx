@@ -1,6 +1,7 @@
 import { TextInput } from "../components/widgets";
 import axios from "axios";
 import { useState } from "react";
+import Modal from "../components/modal";
 
 const update = (setResult) => {
   alert("hello");
@@ -15,11 +16,17 @@ const update = (setResult) => {
       headers: { Authorization: localStorage.getItem("JWT") },
     })
     .then((_res) => {
-      setResult("success");
+      //setResult("success");
+      <Modal
+        title="Success"
+        text="Data added successfully"
+        linkPositive="../"
+      />;
       console.log("data added!");
     })
     .catch((error) => {
       setResult("error");
+      <Modal title="Error" text="Failed to add employee" linkPositive="." />;
       console.error(error);
     });
 };

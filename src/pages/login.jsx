@@ -1,5 +1,6 @@
 import { TextInput, DropDown } from "../components/widgets";
 import axios, { HttpStatusCode } from "axios";
+import Modal from "../components/modal";
 
 async function handleLogin(updateToken) {
   let username = document.loginform.username.value;
