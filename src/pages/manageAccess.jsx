@@ -31,24 +31,29 @@ export default function ManageAccess() {
     );
   } else {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row) => {
-            return (
-              <tr key={row._id}>
-                <td>{row.username}</td>
-                <td>{row.email}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="col">
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row) => {
+              return (
+                <tr key={row._id}>
+                  <td>{row.username}</td>
+                  <td>{row.email}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <Link to="../addUser" className="button">
+          Add User
+        </Link>
+      </div>
     );
   }
 }

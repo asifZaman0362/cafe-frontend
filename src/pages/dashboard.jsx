@@ -6,17 +6,31 @@ import Payment from "../components/payment.jsx";
 import { useEffect, useState } from "react";
 import { get } from "../request";
 
-function InventoryOverview(props) {
+function InventoryOverview() {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    get("/inventory/listInventory")
+      .then((res) => {
+        console.debug(res.data);
+        setData(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+  if (!data) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="submodue inventory-overview">
       <h1 className="submodule-heading">Inventory</h1>
       <div className="inner">
         <h4 className="inner-heading">Recent Updates</h4>
         <ul className="recent-items-list">
-          {props.items.map((item) => (
+          {data.slice(0, 5).map((item) => (
             <li key={item.id} className="row">
               <p className="name">{item.name}</p>
-              <p className={item.change}>{item.amount}</p>
+              <p className={item.change >= 0 ? "positive" : "negative"}>
+                {Math.abs(item.change)}
+              </p>
               <span>units</span>
             </li>
           ))}
@@ -42,30 +56,61 @@ function Sidebar(props) {
   );
 }
 
-function AttendanceOverview(props) {
-  return (
-    <div className="submodule attendance-overview">
-      <h1 className="submodule-heading">Staff Attendance</h1>
-      <div className="row">
-        <div className="col">
-          <span className="fill transparent">In Today:</span>
-          <span className="in positive transparent">{props.in}</span>
-        </div>
-        <div className="col">
-          <span className="fill transparent">Missing Work:</span>
-          <span className="missing negative transparent">{props.missing}</span>
+function AttendanceOverview() {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    get("/attendance/getRecord/" + new Date().toISOString().slice(0, 10))
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.err(err));
+  }, []);
+  if (!data) {
+    return (
+      <div className="submodule attendance-overview">
+        <h1 className="submodule-heading">Staff Attendance</h1>
+        <div>No Record for today!</div>
+        <div className="row horizontal fill transparent">
+          <Link className="button white fill" to="listAttendance">
+            Browse Records
+          </Link>
+          <Link className="button white fill" to="addAttendance">
+            Take Attendance
+          </Link>
         </div>
       </div>
-      <div className="row horizontal fill transparent">
-        <Link className="button white fill" to="listAttendance">
-          Browse Records
-        </Link>
-        <Link className="button white fill" to="addAttendance">
-          Take Attendance
-        </Link>
+    );
+  } else {
+    let [present, absent] = [0, 0];
+    data.entries.map((entry) => {
+      if (entry.attendance) {
+        present++;
+      } else absent++;
+    });
+    return (
+      <div className="submodule attendance-overview">
+        <h1 className="submodule-heading">Staff Attendance</h1>
+        <div className="row">
+          <div className="col">
+            <span className="fill transparent">In Today:</span>
+            <span className="in positive transparent">{present}</span>
+          </div>
+          <div className="col">
+            <span className="fill transparent">Missing Work:</span>
+            <span className="missing negative transparent">{absent}</span>
+          </div>
+        </div>
+        <div className="row horizontal fill transparent">
+          <Link className="button white fill" to="listAttendance">
+            Browse Records
+          </Link>
+          <Link className="button white fill" to="addAttendance">
+            Take Attendance
+          </Link>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 function BottomBar() {

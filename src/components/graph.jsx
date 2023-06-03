@@ -247,7 +247,6 @@ function drawAxes(
   let dx = width_data / intervalsx;
   let dy = height_data / intervalsy;
   for (let x = 0; x <= intervalsx; x++) {
-    console.log(x);
     let xpos = (x * (endx - startx)) / intervalsx + startx;
     let data_point_x = dx * x + data_start_x;
     ctx.fillStyle = "black";
@@ -424,7 +423,6 @@ const Graph = ({ data, startx = 150, endx = 50, starty = 50, endy = 150 }) => {
         datastarty
       );
     }
-    console.log("hello");
 
     canvas.current.addEventListener("mousemove", handleMouseMove);
     return () => {
