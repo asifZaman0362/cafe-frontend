@@ -9,20 +9,27 @@ async function handleLogin(updateToken) {
     document.loginform.reportValidity();
   }
   // login using API
-  let result = await axios.post("/auth/login", {
-    username: username,
-    password: password,
-    accessLevel: accessLevel,
-  });
-  if (result.status == HttpStatusCode.Ok) {
-    console.debug(result.data);
-    updateToken(result.data);
-    localStorage.setItem("JWT", result.data.token);
-    console.debug("token:", result.data);
-    alert("Logged in!");
-  } else {
-    alert(`Error logging in! Error code ${result.status}`);
-  }
+  axios
+    .post("/auth/login", {
+      username: username,
+      password: password,
+      accessLevel: accessLevel,
+    })
+    .then((_res) => {
+      updateToken();
+      localStorage.setItem("JWT", _res.data.token);
+    })
+    .catch((_err) => {
+      alert("invalid credentials!");
+      document.loginform.username.setCustomValidity("Invalid credentials");
+      document.loginform.password.setCustomValidity("Invalid credentials");
+      document.loginform.password.addEventListener("input", (_e) =>
+        document.loginform.password.setCustomValidity("")
+      );
+      document.loginform.username.addEventListener("input", (_e) =>
+        document.loginform.username.setCustomValidity("")
+      );
+    });
 }
 
 export default function LoginBox(props) {
